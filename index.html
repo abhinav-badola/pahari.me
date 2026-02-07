@@ -48,6 +48,24 @@
     max-width: 900px;
     width: 100%;
   }
+  .middle h1,
+  #demo {
+    font-size: clamp(20px, 3vw, 32px);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1.35;
+  }
+  #demo {
+    margin: 0;
+    margin-top: 1rem;
+  }
+  .middle h1 {
+    margin: 0 0 1rem;
+  }
+  hr {
+    margin: 0 auto;
+  }
 
   /* fixed overlay to keep heading and timer centered on screen */
   .fixed-center{
@@ -68,7 +86,8 @@
   /* Small screens */
   @media (max-width: 600px) {
     .bgimg{font-size:16px;padding:1.5rem}
-    .middle h1{font-size:1.6rem}
+    .middle h1,
+    #demo{font-size:1.4rem}
     hr{width:70%}
   }
 
@@ -92,37 +111,10 @@
 </div>
 
 <script>
-<<<<<<< Updated upstream
-// Set the date we're counting down to
-var countDownDate = new Date("August 12, 2024 05:37:25").getTime();
-
-// Update the count down every 1 second
-var x = setInterval(function() {
-
-  // Get today's date and time
-  var now = new Date().getTime();
-    
-  // Find the distance between now and the count down date
-  var distance = countDownDate - now;
-    
-  // Time calculations for days, hours, minutes and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    
-  // Output the result in an element with id="demo"
-  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-  + minutes + "m " + seconds + "s ";
-    
-  // If the count down is over, write some text 
-  if (distance < 0) {
-    clearInterval(x);
-    document.getElementById("demo").innerHTML = "";
-=======
 (function(){
   function startCountdown(){
-    var countDownDate = new Date("August 12, 2026 05:37:25").getTime();
+    // Use an explicit UTC timestamp to avoid locale/timezone parsing differences.
+    var countDownDate = new Date("2026-08-12T05:37:25Z").getTime();
     var el = document.getElementById("demo");
     if(!el) return;
     function tick(){
@@ -141,7 +133,6 @@ var x = setInterval(function() {
     }
     tick();
     var iv = setInterval(tick, 1000);
->>>>>>> Stashed changes
   }
 
   if (document.readyState === 'loading') {
