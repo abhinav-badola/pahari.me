@@ -1,52 +1,89 @@
 <!DOCTYPE html>
 <html>
-<style>
-body, html {
-  height: 100%;
-  margin: 0;
-}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="preload" href="background.jpeg" as="image">
+  <style>
+  body, html {
+    height: 100%;
+    margin: 0;
+  }
 
-.bgimg {
-  background-image: url('/background.jpeg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-size: cover;
-  position:absolute;
-  width:100%; 
-  height:100%; 
-  color: white;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 25px;
-}
-.topleft {
-  position: absolute;
-  top: 0;
-  left: 16px;
-}
+  .bgimg {
+    background-image: url('background.jpeg');
+    background-position: top center; /* start from top of the image */
+    background-repeat: no-repeat;
+    background-attachment: scroll; /* image scrolls with page */
+    background-size: cover;
+    position: relative; /* allow page to scroll and image to flow */
+    z-index: 0;
+    width:100%;
+    min-height:200vh; /* make the image area taller so it scrolls */
+    color: white;
+    font-family: "Courier New", Courier, monospace;
+    font-size: clamp(18px, 2.2vw, 28px); /* responsive font sizing */
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+  }
+  .topleft {
+    position: absolute;
+    top: 0;
+    left: 16px;
+  }
 
-.bottomleft {
-  position: absolute;
-  bottom: 0;
-  left: 16px;
-}
+  .bottomleft {
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+  }
 
-.middle {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
+  .middle {
+    /* center within the .bgimg which is now a flex container */
+    position: relative;
+    text-align: center;
+    max-width: 900px;
+    width: 100%;
+  }
 
-hr {
-  margin: auto;
-  width: 40%;
-}
-</style>
+  /* fixed overlay to keep heading and timer centered on screen */
+  .fixed-center{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2; /* above bgimg */
+    text-align: center;
+    pointer-events: none; /* preserve background interactions if any */
+    width: 100%;
+    max-width: 900px;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    color: white;
+  }
+
+  /* Small screens */
+  @media (max-width: 600px) {
+    .bgimg{font-size:16px;padding:1.5rem}
+    .middle h1{font-size:1.6rem}
+    hr{width:70%}
+  }
+
+  hr {
+    margin: auto;
+    width: 40%;
+  }
+  </style>
+</head>
 <body>
 
-<div class="bgimg">
+<div class="bgimg"></div>
+
+<!-- Fixed centered overlay so heading and countdown stay centered while background scrolls -->
+<div class="fixed-center" role="region" aria-label="Countdown">
   <div class="middle">
     <h1>COMING SOON</h1>
     <hr>
@@ -55,6 +92,7 @@ hr {
 </div>
 
 <script>
+<<<<<<< Updated upstream
 // Set the date we're counting down to
 var countDownDate = new Date("August 12, 2024 05:37:25").getTime();
 
@@ -81,8 +119,37 @@ var x = setInterval(function() {
   if (distance < 0) {
     clearInterval(x);
     document.getElementById("demo").innerHTML = "";
+=======
+(function(){
+  function startCountdown(){
+    var countDownDate = new Date("August 12, 2026 05:37:25").getTime();
+    var el = document.getElementById("demo");
+    if(!el) return;
+    function tick(){
+      var now = Date.now();
+      var distance = countDownDate - now;
+      if (distance < 0) {
+        el.innerHTML = "";
+        clearInterval(iv);
+        return;
+      }
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      el.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+    }
+    tick();
+    var iv = setInterval(tick, 1000);
+>>>>>>> Stashed changes
   }
-}, 1000);
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startCountdown);
+  } else {
+    startCountdown();
+  }
+})();
 </script>
 </body>
 </html>
